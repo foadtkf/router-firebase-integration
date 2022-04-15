@@ -2,12 +2,24 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
-import useFirebase from './../../hooks/useFirebase';
-
+// import useFirebase from './../../hooks/useFirebase';
+import {useSignInWithGoogle} from 'react-firebase-hooks/auth'
+import { getAuth } from 'firebase/auth';
+import app from './../../firebase.init';
+import { useLocation, useNavigate } from 'react-router-dom';
+const auth=getAuth(app)
 const Login = () => {
-    const {signinWithGoogle}=useFirebase()
+//     const {signinWithGoogle}=useFirebase()
     const [email,setEmail]=useState('')
     const [pass,setPass]=useState('')
+    const [signInWithGoogle, user] = useSignInWithGoogle(auth);
+    let location = useLocation();
+    let navigate = useNavigate();
+    let from = location.state?.from?.pathname || "/";
+    const handleSignIn =()=>{
+      signInWithGoogle()
+      .then(()=>navigate(from, { replace: true }))
+    }
     const handleEmailblur=event=>{
         setEmail(event.target.value)
           }
@@ -18,7 +30,7 @@ const Login = () => {
         <div>
             <h2>This is login page</h2>
             <Form className='container w-50'>
-            <Button onClick={signinWithGoogle} variant="success" type="button">
+            <Button onClick={handleSignIn} variant="success" type="button">
     Sign in with google
   </Button>
   <Form.Group className="mb-3" controlId="formBasicEmail">
