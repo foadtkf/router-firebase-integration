@@ -5,6 +5,7 @@ const Register = () => {
     const [email,setEmail]=useState('')
     const [pass,setPass]=useState('')
     const [name,setName]=useState('')
+    console.log(email,pass)
     const handleNameblur=event=>{
         setName(event.target.value)
         console.log(name)

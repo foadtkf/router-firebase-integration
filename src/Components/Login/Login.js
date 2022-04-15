@@ -13,6 +13,7 @@ const Login = () => {
     const [email,setEmail]=useState('')
     const [pass,setPass]=useState('')
     const [signInWithGoogle, user] = useSignInWithGoogle(auth);
+    console.log(email,user,pass)
     let location = useLocation();
     let navigate = useNavigate();
     let from = location.state?.from?.pathname || "/";
